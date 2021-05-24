@@ -1,31 +1,46 @@
 <template>
-    <a-breadcrumb :routes="[getBreadcrumb]" separator="/">
-        <template #itemRender="{ route, routes, paths }">
-            <span v-if="routes.indexOf(route) === routes.length - 1">
-                {{ route.name }}
-            </span>
-            <router-link v-else :to="`${route.name}`">
-                {{ route.name }}
-            </router-link>
-        </template>
-         <br />
-    {{ path}}
-    </a-breadcrumb>
-
+    <div class="breadcrumb">
+        <a-breadcrumb :routes="[getBreadcrumb]">
+            <template #itemRender="{ route, routes, paths }">
+                <span v-if="routes.indexOf(route) === routes.length - 1">
+                    {{ route.name }}
+                </span>
+                <router-link v-else :to="{name:route.name}">
+                    {{ route.meta.title }}
+                </router-link>
+            </template>
+        </a-breadcrumb>
+        <span class="br">/</span>
+        <span class="title">{{ title }}</span>
+    </div>
 </template>
 <script lang="ts">
-import { defineComponent ,ref} from "vue";
+import { computed, defineComponent } from "vue";
 import { useAppStoreModule } from "@/hooks/web/useApp";
 import { useRoute } from "vue-router";
 export default defineComponent({
     setup() {
-        const {getBreadcrumb} = useAppStoreModule();
+        const { getBreadcrumb } = useAppStoreModule();
         const route = useRoute();
-        const path = ref(route.path);
+        const title = computed(() => route.meta.title);
         return {
             getBreadcrumb,
-            path
+            title,
         };
     },
 });
 </script>
+
+<style lang="less" scoped>
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    .br {
+        margin: 0 8px;
+    }
+    .br,
+    .title {
+        opacity: 0.7;
+    }
+}
+</style>

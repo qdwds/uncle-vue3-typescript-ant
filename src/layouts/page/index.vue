@@ -1,19 +1,26 @@
 <template>
-    <div>
-        <RouterView></RouterView>
-    </div>
+    <RouterView>
+        <template #default="{ Component, route }">
+            <transition name="zoom-fade" mode="out-in" appear>
+                <!-- <keep-alive>
+                        <component></component>
+                    </keep-alive> -->
+                <component :is="Component" :key="route.fullPath"></component>
+            </transition>
+        </template>
+    </RouterView>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
 export default defineComponent({
-    setup () {
-        return {}
-    }
-})
+    setup() {
+        return {};
+    },
+});
 </script>
 
-<style scoped>
-
+<style lang="less" scoped>
+@import "@/styles/transform.less";
 </style>

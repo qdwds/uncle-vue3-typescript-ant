@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router, { setupRouter } from "./router";
 import { setupStore } from "./store";
-
+import { setupRouterGuard } from "./router/guards";
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import "./styles/index.less";
@@ -15,6 +15,8 @@ import "./styles/index.less";
 
     setupRouter(app);
 
+    setupRouterGuard()
+    
     setupStore(app);
 
     await router.isReady();
