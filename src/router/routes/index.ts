@@ -13,7 +13,7 @@ Object.keys(modules).forEach(key => {
 //  根目录
 const RootRoute: AppRouteModule = {
     path: "/",
-    name: "root",
+    name: "Root",
     redirect: "/login",
 }
 

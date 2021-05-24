@@ -2,27 +2,26 @@ import { defineStore } from "pinia";
 import { store } from "@/store";
 
 interface AppStore {
-    count: number
+    breadcrumb: Object
 }
 
 export const useAppStore = defineStore({
     id: "app",
     state: (): AppStore => ({
-        count: 1
+        breadcrumb: []
     }),
-    getters:{
-        getCount:state=>state.count,
-        g(state){
-            return state.count;
+    getters: {
+        getBreadcrumb(state) {
+            return state.breadcrumb
         }
     },
     actions: {
-        setCount(count: number): void{
-            this.count = count;
-        },
+        setBreadcrumb(breadcrumb: Object): void {
+            this.breadcrumb = breadcrumb;
+        }
     }
 })
 
-export const userAppStoreWidthOut = () =>{
+export const userAppStoreWidthOut = () => {
     return useAppStore(store)
 }

@@ -19,7 +19,8 @@ import Logo from "../logo/index.vue";
 import MenuItems from "./menuItems.vue";
 import { defineComponent, reactive, ref, toRefs } from "vue";
 import { Menu, Layout } from "ant-design-vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute,useRouter } from "vue-router";
+import { userFilterRoutes } from "@/hooks/router/userRoutes";
 export default defineComponent({
     components: {
         Logo,
@@ -30,10 +31,9 @@ export default defineComponent({
     setup() {
         const route = useRoute();
         const router = useRouter();
-        const routes = router.options.routes.filter(
-            (r) => r.name !== "root" && r.name !== "error" && r.name !== "Login"
-        );
-
+        const routes = userFilterRoutes(router.options.routes)
+      console.log(routes);
+      
         //  路由排序
         const routesSort = (meta: string, orderNo: string) => {
             return function (a: any, b: any) {
@@ -43,6 +43,7 @@ export default defineComponent({
             };
         };
         routes.sort(routesSort("meta", "orderNo"));
+
 
         let collapsed = ref<Boolean>(false);
         const getOpenKeys = () => [route.matched[0]?.name];

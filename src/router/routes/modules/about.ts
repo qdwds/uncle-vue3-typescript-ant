@@ -2,7 +2,7 @@ import type { AppRouteModule } from "@/router/types";
 import { LAYOUT } from "../basic";
 
 const about:AppRouteModule = {
-    name:"about",
+    name:"About",
     path:"/about",
     component:LAYOUT,
     redirect: '/about/index',
@@ -12,7 +12,7 @@ const about:AppRouteModule = {
     },
     children:[
         {
-            name:"about",
+            name:"AboutIndex",
             path:"index",
             component:()=>import("@/views/about/index.vue"),
             meta:{

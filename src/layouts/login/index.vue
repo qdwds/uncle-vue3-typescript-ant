@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="login_content">
-      <div class="login_logo">LOGIN</div>
+      <div class="login_logo">欢迎回来!</div>
       <a-form :wrapper-col="wrapperCol" class="login_form">
         <a-form-item v-bind="validateInfos.username">
           <a-input
@@ -22,7 +22,7 @@
           </a-input-password>
         </a-form-item>
         <a-form-item class="login_form_item">
-          <a-button type="primary" @click.prevent="onSubmit">22222222222}</a-button>
+          <a-button type="primary" @click.prevent="onSubmit">登录</a-button>
         </a-form-item>
       </a-form>
     </div>

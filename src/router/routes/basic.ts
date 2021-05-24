@@ -7,7 +7,7 @@ export const LAYOUT = () => import("@/layouts/default/index.vue");
 //  404
 export const NOT_FOUND_ROUTE: AppRouteModule = {
     path:"/:path(.*)*",
-    name:"error",
+    name:"Error",
     component:LAYOUT,
     children:[
         {

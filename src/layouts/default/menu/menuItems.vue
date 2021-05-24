@@ -19,8 +19,10 @@
 </template>
 
 <script>
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { Menu } from "ant-design-vue";
+import { userFilterRoutes } from "@/hooks/router/userRoutes";
+import { useAppStoreModule } from "@/hooks/web/useApp";
 export default {
     name: "MenuItems",
     props: {
@@ -32,10 +34,25 @@ export default {
     },
     setup() {
         const router = useRouter();
-
-        const handleRouterChange = (name) => {
-            router.push({ name });
+        const route = useRoute();
+        const { setBreadcrumb } = useAppStoreModule();
+        //  获取当前路由 转成可以和name匹配的路由名
+        const handleRoutePath = (path) => {
+            let hash = path.split("/")[1];
+            let hashOne = hash.charAt(0);
+            return hash.replace(hashOne, hashOne.toLocaleUpperCase());
         };
+        //  切换路由 => 跳转 => 更换当前路由信息
+        const handleRouterChange = async (name) => {
+            await router.push({ name });
+            const hash = handleRoutePath(route.path);
+            userFilterRoutes(router.options.routes).forEach((r) => {
+                if (r.name === hash) {
+                    setBreadcrumb(r)
+                }
+            });
+        };
+
         return {
             handleRouterChange,
         };
