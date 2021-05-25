@@ -10,6 +10,7 @@
     "@types/nprogress": "^0.2.0",
     "ant-design-vue": "2.1.2",
     "axios": "^0.21.1",
+    "echarts": "^5.1.1",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.0-alpha.16",
     "vue": "^3.0.5",

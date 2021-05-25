@@ -3,7 +3,12 @@ const modules = import.meta.globEager("./modules/**/*.ts");
 import { NOT_FOUND_ROUTE ,login } from "./basic";
 
 const routeModuleList: AppRouteModule[] = [];
-
+/**
+ * Dashboard    1
+ * Three        2
+ * Echarts      3
+ * About        9
+ */
 Object.keys(modules).forEach(key => {
     const mod = modules[key].default || {};
     const modList = Array.isArray(mod) ? [...mod] : [mod];
