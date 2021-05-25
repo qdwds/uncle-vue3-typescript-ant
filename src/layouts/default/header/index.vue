@@ -1,14 +1,15 @@
 <template>
     <LayoutHeader id="header">
-
         <div class="header_left">
             <Breadcrumb></Breadcrumb>
         </div>
 
         <div class="header_right">
+            <LockScreen></LockScreen>
+            <Github></Github>
             <FullScreen></FullScreen>
-            <User></User>
             <Setting></Setting>
+            <UserInfo></UserInfo>
         </div>
     </LayoutHeader>
 </template>
@@ -19,14 +20,18 @@ import { Layout } from "ant-design-vue";
 import Setting from "./setting/index.vue";
 import Breadcrumb from "./breadcrumb/index.vue";
 import FullScreen from "./FullScreen/index.vue";
-import User from "./user/index.vue";
+import UserInfo from "./userInfo/index.vue";
+import Github from "./github/index.vue";
+import LockScreen from "./lockScreen/index.vue";
 export default defineComponent({
     components: {
         LayoutHeader: Layout.Header,
         Setting,
         Breadcrumb,
         FullScreen,
-        User,
+        UserInfo,
+        Github,
+        LockScreen,
     },
     setup() {
         return {};
@@ -48,7 +53,7 @@ export default defineComponent({
         width: 220px;
     }
     .header_right {
-        width: 180px;
+        width: 280px;
         height: 100%;
         display: flex;
         flex-direction: row;

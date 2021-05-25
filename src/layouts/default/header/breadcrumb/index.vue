@@ -42,5 +42,9 @@ export default defineComponent({
     .title {
         opacity: 0.7;
     }
+    .title,
+    .ant-breadcrumb{
+        cursor: pointer;
+    }
 }
 </style>
