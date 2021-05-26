@@ -1,7 +1,7 @@
 <template>
     <LayoutContent>
         <Card bordered id="card">
-            <Page></Page>
+            <Page ></Page>
         </Card>
     </LayoutContent>
 </template>
@@ -22,8 +22,9 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-#card {
+<style lang="less" scoped>
+#card ,
+::v-deep .ant-card-body{
     height: calc(100vh - 72px);
 }
 </style>

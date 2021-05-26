@@ -1,5 +1,6 @@
 <template>
-    <RouterView>
+    <div class="page">
+        <RouterView>
         <template #default="{ Component, route }">
             <transition name="zoom-fade" mode="out-in" appear>
                 <!-- <keep-alive>
@@ -9,6 +10,7 @@
             </transition>
         </template>
     </RouterView>
+    </div>
 </template>
 
 <script lang="ts">
@@ -23,4 +25,9 @@ export default defineComponent({
 
 <style lang="less" scoped>
 @import "@/styles/transform.less";
+.page{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
 </style>
