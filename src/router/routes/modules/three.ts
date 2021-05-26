@@ -18,6 +18,22 @@ const three:AppRouteModule = {
                 title:"3d"
             },
         },
+        {
+            name:"Block",
+            path:"block",
+            component:()=>import("@/views/three/block/index.vue"),
+            meta:{
+                title:"方块"
+            },
+        },
+        {
+            name:"QuadraticElement",
+            path:"quadraticElement",
+            component:()=>import("@/views/three/quadraticElement/index.vue"),
+            meta:{
+                title:"二次元"
+            },
+        },
     ]
 }
 export default three;
