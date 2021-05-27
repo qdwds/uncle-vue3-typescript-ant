@@ -1,5 +1,5 @@
 <template>
-    <div class="page" ref="pageRef">
+    <div class="page" ref="windowRef">
         <RouterView>
             <template #default="{ Component, route }">
                 <transition name="zoom-fade" mode="out-in" appear>
@@ -21,18 +21,18 @@ import { defineComponent, onMounted, ref } from "vue";
 import { useWinStoreModule } from "@/hooks/web/useWin";
 export default defineComponent({
     setup() {
-        const { setPageDom } = useWinStoreModule();
-        const pageRef = ref<Element | null>(null);
+        const { setWindowSize } = useWinStoreModule();
+        const windowRef = ref<Element | null>(null);
 
         //  获取page 窗口大小
         const handlePageResize = () => {
-            if (pageRef.value) {
-                setPageDom({
+            if (windowRef.value) {
+                setWindowSize({
                     width: parseInt(
-                        window.getComputedStyle(pageRef.value).width
+                        window.getComputedStyle(windowRef.value).width
                     ),
                     height: parseInt(
-                        window.getComputedStyle(pageRef.value).height
+                        window.getComputedStyle(windowRef.value).height
                     ),
                 });
             }
@@ -44,7 +44,7 @@ export default defineComponent({
             handlePageResize();
         });
 
-        return { pageRef };
+        return { windowRef };
     },
 });
 </script>

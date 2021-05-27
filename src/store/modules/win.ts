@@ -2,10 +2,10 @@ import { defineStore } from "pinia";
 import { store } from "@/store";
 
 interface OWinStore {
-    pageDom: OPageDom
+    windowSize: OWindowSize
 }
 
-export interface OPageDom {
+export interface OWindowSize {
     width: number,
     height: number
 }
@@ -14,19 +14,19 @@ export const useWinStore = defineStore({
     id: "win",
     state: (): OWinStore => ({
         //  窗口大小
-        pageDom: {
+        windowSize: {
             width: 0,
             height: 0
         }
     }),
     getters: {
-        getPageDom(state: OWinStore): OPageDom {
-            return state.pageDom
+        getWindowSize(state: OWinStore): OWindowSize {
+            return state.windowSize
         }
     },
     actions: {
-        setPageDom(page: OPageDom): void {
-            this.pageDom = page
+        setWindowSize(page: OWindowSize): void {
+            this.windowSize = page
         }
     }
 })

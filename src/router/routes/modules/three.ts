@@ -6,16 +6,16 @@ const three:AppRouteModule = {
     component:LAYOUT,
     redirect:"/three/3d",
     meta:{
-        title:"three",
+        title:"Three.js",
         orderNo:2
     },
     children:[
         {
-            name:"3d",
-            path:"3d",
-            component:()=>import("@/views/three/3d/index.vue"),
+            name:"Vr",
+            path:"vr",
+            component:()=>import("@/views/three/vr/index.vue"),
             meta:{
-                title:"3d"
+                title:"VR 瞅瞅"
             },
         },
         {
@@ -23,7 +23,7 @@ const three:AppRouteModule = {
             path:"block",
             component:()=>import("@/views/three/block/index.vue"),
             meta:{
-                title:"方块"
+                title:"悬浮的箱子"
             },
         },
         {

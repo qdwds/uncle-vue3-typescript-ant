@@ -16,39 +16,29 @@ import {
     Mesh,
     Object3D,
 } from "three";
+
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { useWinStoreModule } from "@/hooks/web/useWin";
+import { useStatsJs } from "@/hooks/web/useStats";
 
 export default defineComponent({
     setup() {
-        const IMG_PATH = "/public/skybox";
-        let stop: any = null;
-        const { getPageDom }= useWinStoreModule();
-        // const setNumber = (obj:any):Object =>{
-        //     const num:any = {}
-        //     for (const k in obj.value) {
-        //         if(typeof obj.value[k] === "string" && obj.value[k].includes("px")){
-        //                 num[k] = Number(obj.value[k].slice(0,-2))
-        //         }
-        //     }
-        //     console.log(num);
-            
-        // }
-        // setNumber(getPageDom)
-        console.log(getPageDom.value);
-        
+        const IMG_PATH = "/three/skybox";
+        let stop: number | null = null;
+        const { getWindowSize } = useWinStoreModule();
+        const { stats } = useStatsJs();
         //  舞台
         const scene: Scene = new Scene();
         //  相机
         const camera: PerspectiveCamera = new PerspectiveCamera(
             45,
-            getPageDom.value.width / getPageDom.value.height,
+            getWindowSize.value.width / getWindowSize.value.height,
             0.1,
             1000
         );
         camera.position.z = 50;
         const renderer: Renderer = new WebGLRenderer({ antialias: true });
-        renderer.setSize(getPageDom.value.width, getPageDom.value.height);
+        renderer.setSize(getWindowSize.value.width, getWindowSize.value.height);
 
         //  操作
         const orbitControls: OrbitControls = new OrbitControls(
@@ -63,7 +53,7 @@ export default defineComponent({
 
         //  创建箱子
         const boxGeometry: BoxGeometry = new BoxGeometry(10, 10, 10);
-        const meshBasiMeterial = new MeshBasicMaterial({
+        const meshBasiMeterial: MeshBasicMaterial = new MeshBasicMaterial({
             map: boxTextureLoader,
             side: DoubleSide,
         });
@@ -120,19 +110,31 @@ export default defineComponent({
             if (skyboxMesh) {
                 skyboxMesh.rotation.y += 0.001;
             }
+            stats.update();
         };
 
         //  窗口 改变
         window.addEventListener("resize", () => onWindowResize());
-
         const onWindowResize = () => {
-            renderer.setSize(getPageDom.value.width, getPageDom.value.height);
-            camera.aspect = getPageDom.value.width / getPageDom.value.height; //  处理 浏览器缩放
+            if (getWindowSize.value?.height && getWindowSize.value?.width) {
+                renderer.setSize(
+                    getWindowSize.value.width,
+                    getWindowSize.value.height
+                );
+                camera.aspect =
+                    getWindowSize.value.width / getWindowSize.value.height; //  处理 浏览器缩放
+            }
             camera.updateProjectionMatrix(); //  更新窗口
         };
+
         onMounted(() => {
             const block: HTMLElement | null = document.getElementById("block");
             if (block) {
+                //  性能监控
+                stats.showPanel(0);
+                block.appendChild(stats.dom);
+                stats.dom.style.position = "absolute";
+
                 block.appendChild(renderer.domElement);
             }
             render();
@@ -140,7 +142,9 @@ export default defineComponent({
 
         //  离开页面停止渲染
         onUnmounted(() => {
-            cancelAnimationFrame(stop);
+            if (stop) {
+                cancelAnimationFrame(stop);
+            }
         });
         return {};
     },

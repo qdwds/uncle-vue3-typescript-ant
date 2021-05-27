@@ -1,4 +1,4 @@
-import { useWinStore ,OPageDom} from "@/store/modules/win";
+import { useWinStore ,OWindowSize} from "@/store/modules/win";
 import { computed } from "vue";
 
 
@@ -6,13 +6,13 @@ export const useWinStoreModule = ()=>{
     const winStoreModule = useWinStore();
 
     //  content窗口大小
-    const getPageDom = computed(()=>winStoreModule.getPageDom);
+    const getWindowSize = computed(()=>winStoreModule.getWindowSize);
     
-    const setPageDom = (page:OPageDom):void =>{
-        winStoreModule.setPageDom(page);
+    const setWindowSize = (size:OWindowSize):void =>{
+        winStoreModule.setWindowSize(size);
     }
     return {
-        getPageDom,
-        setPageDom
+        getWindowSize,
+        setWindowSize
     }
 }

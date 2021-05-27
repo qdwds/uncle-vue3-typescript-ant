@@ -6,7 +6,7 @@ import { setupRouterGuard } from "./router/guards";
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import "./styles/index.less";
-
+import  "@/hooks/web/useStats";
 
 
 (async () => {
