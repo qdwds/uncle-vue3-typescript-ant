@@ -143,8 +143,8 @@ export default defineComponent({
         window.addEventListener("resize", () => onWindowResize());
         const onWindowResize = () => {
             if (getWindowSize.value?.height && getWindowSize.value?.width) {
-                renderer.setSize(width, height);
-                camera.aspect = width / height; //  处理 浏览器缩放
+                renderer.setSize(getWindowSize.value?.width, getWindowSize.value?.height);
+                camera.aspect = getWindowSize.value?.width / getWindowSize.value?.height; //  处理 浏览器缩放
             }
             camera.updateProjectionMatrix(); //  更新窗口
         };

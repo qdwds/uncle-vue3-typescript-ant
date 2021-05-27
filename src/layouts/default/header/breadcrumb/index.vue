@@ -47,4 +47,7 @@ export default defineComponent({
         cursor: pointer;
     }
 }
+    .ant-dropdown{
+        z-index: 10001 !important;
+    }
 </style>

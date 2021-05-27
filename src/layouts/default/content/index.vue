@@ -23,8 +23,8 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-::v-deep .ant-card-body{
-    height: calc(100vh - 58px);
+:deep .ant-card-body{
+    height: calc(100vh - 51px);
     padding: 0px;
     margin: 0px;
 }
@@ -32,7 +32,7 @@ export default defineComponent({
     background: #ccc;
 }
 .ant-card{
-    margin: 4px;
+    margin: 0;
     overflow: hidden;
 }
 </style>
