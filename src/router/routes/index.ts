@@ -7,6 +7,7 @@ const routeModuleList: AppRouteModule[] = [];
  * Dashboard    1
  * Three        2
  * Echarts      3
+ * Fun          4
  * About        9
  */
 Object.keys(modules).forEach(key => {
