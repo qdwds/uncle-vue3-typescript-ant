@@ -6,9 +6,11 @@
 import { defineComponent, onMounted } from 'vue'
 export default defineComponent({
   setup () {
+    console.log(window);
+    
     onMounted(()=>{
-      const map = new BMap.Map('baidu')
-      const point = new BMap.Point(116.404, 39.915)
+      const map = new window.BMap.Map('baidu')
+      const point = new window.BMap.Point(116.404, 39.915)
       map.centerAndZoom(point, 15)
       map.enableScrollWheelZoom(true)
 
