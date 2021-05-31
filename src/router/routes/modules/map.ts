@@ -3,8 +3,8 @@ import { LAYOUT } from "../basic";
 
 
 const map: AppRouteModule = {
-    name: "Map",
     path: "/map",
+    name: "Map",
     redirect: "/map/baidu",
     component: LAYOUT,
     meta: {

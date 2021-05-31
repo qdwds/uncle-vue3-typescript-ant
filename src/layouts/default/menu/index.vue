@@ -63,4 +63,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.ant-layout-sider{
+    height: 100vh;
+    overflow-y: auto;
+}
 </style>
