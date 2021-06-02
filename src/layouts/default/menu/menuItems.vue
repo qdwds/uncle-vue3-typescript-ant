@@ -23,7 +23,7 @@ import { useRoute, useRouter } from "vue-router";
 import { Menu } from "ant-design-vue";
 import { userFilterRoutes } from "@/hooks/router/userRoutes";
 import { useAppStoreModule } from "@/hooks/web/useApp";
-import { onMounted } from "@vue/runtime-core";
+import { onMounted } from "vue";
 export default {
     name: "MenuItems",
     props: {

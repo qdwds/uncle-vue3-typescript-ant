@@ -1,8 +1,8 @@
 <template>
     <LayoutContent>
-        <Card  id="card">
+        <div  id="card">
             <Page ></Page>
-        </Card>
+        </div>
     </LayoutContent>
 </template>
 
@@ -23,10 +23,12 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-:deep .ant-card-body{
+ #card {
     height: calc(100vh - 51px);
+    width: 100%;
     padding: 0px;
     margin: 0px;
+    background: white;
 }
 .ant-layout-content{
     background: #ccc;

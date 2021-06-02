@@ -3,9 +3,6 @@
         <RouterView>
             <template #default="{ Component, route }">
                 <transition name="zoom-fade" mode="out-in" appear>
-                    <!-- <keep-alive>
-                        <component></component>
-                    </keep-alive> -->
                     <component
                         :is="Component"
                         :key="route.fullPath"
@@ -54,6 +51,6 @@ export default defineComponent({
 .page {
     width: 100%;
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 </style>

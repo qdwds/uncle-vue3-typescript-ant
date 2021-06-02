@@ -1,6 +1,6 @@
 <template>
     <div>
-        下载
+下载
     </div>
 </template>
 

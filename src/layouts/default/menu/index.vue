@@ -32,7 +32,6 @@ export default defineComponent({
         const route = useRoute();
         const router = useRouter();
         const routes = userFilterRoutes(router.options.routes)
-      console.log(routes);
       
         //  路由排序
         const routesSort = (meta: string, orderNo: string) => {
