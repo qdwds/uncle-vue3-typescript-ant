@@ -13,10 +13,12 @@
         <a-button
             type="primary"
             style="margin-left: 26px"
+            :disabled="!file"
             @click="handleUpload"
         >
             上传
         </a-button>
+        <a-button @click="handle">handle</a-button>
     </div>
 </template>
 
@@ -24,25 +26,25 @@
 import { defineComponent, reactive, toRefs } from "vue";
 import { UploadOutlined } from "@ant-design/icons-vue";
 import { apiUploadFile } from "@/api/uploadFile";
-
+import { getRoutes } from "@/api/t";
+import { OUploadFile } from "./types";
 export default defineComponent({
     components: {
         UploadOutlined,
     },
     setup() {
-        const state = reactive({
-            file: [],
+        const state = reactive<OUploadFile>({
+            file: "",
         });
         const handleRemove = () => {};
         const beforeUpload = (file:File):boolean => {
-            state.file.push(file);
+            state.file = file;
             return false;
         };
+        //  上传
         const handleUpload = () => {
-            console.log(state.file);
-            debugger
             const formData = new FormData();
-            formData.append("file",state.file[0])
+            formData.append("file",state.file)
             apiUploadFile(formData)
                 .then(res =>{
                     console.log(res);
@@ -50,11 +52,23 @@ export default defineComponent({
                 .catch(e =>{console.log(e);
                 })
         };
+
+        const handle = ()=>{
+            getRoutes()
+            .then(res =>{
+                console.log(res);
+                
+            })
+            .catch(e =>console.log(e)
+            )
+
+        }
         return {
             ...toRefs(state),
             handleRemove,
             beforeUpload,
             handleUpload,
+            handle,
         };
     },
 });

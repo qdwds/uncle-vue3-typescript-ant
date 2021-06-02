@@ -1,24 +1,31 @@
-import axios from "axios";
-import type {
-    AxiosRequestConfig, //  请求
-    AxiosResponse,      //  响应
-} from "axios";
+/*
+ * @Description: axios 封装
+ * @Author: 前端伪大叔
+ * @Date: 2021-06-02 21:01:54
+ * @LastEditTime: 2021-06-02 23:08:59
+ * @yuque: http://www.yuque.com/qdwds
+ */
+
+import axios, { AxiosError } from "axios";
+import type { AxiosRequestConfig, AxiosResponse } from "axios";
 import { baseURL } from "@/utils/env";
-console.log(baseURL);
-
-import { requestStatusCode } from "./status";
-
-const instance = axios.create({
-    timeout: 3000,
-    baseURL: baseURL as any
+import { responseStatusCode } from "./status";
+import { uploadProgress } from "./progress";
+import { isFormData } from "../validateType";
+const request = axios.create({
+    timeout: 10000,
+    baseURL: baseURL 
 })
 
-instance.interceptors.request.use(
+request.interceptors.request.use(
     (config: AxiosRequestConfig): AxiosRequestConfig => {
-        // const token = window.localStorage.getItem("token");
-        // if (token) {
-        //     
-        // }
+       
+        if(isFormData(config.data)){
+            console.log('form');
+            
+            uploadProgress(config)
+        }
+        
         return config
     },
     (error: any): any => {
@@ -27,19 +34,17 @@ instance.interceptors.request.use(
 )
 
 
-instance.interceptors.response.use(
-    (response: AxiosResponse<any>): AxiosResponse<any> => {
+request.interceptors.response.use(
+    (response: AxiosResponse<AxiosResponse>): AxiosResponse<AxiosResponse> => {
         return response.data
     },
-    (error: any): any => {
-        try {
-            const { response } = error || {};
-            requestStatusCode(response?.status);
-        } catch (error) {
+    (error: AxiosError): any => {
+        if (error && error.response) {
+            responseStatusCode(error.response?.status);
+        } else {
             return Promise.reject(error);
         }
     }
-
 )
 
-export default instance
+export default request

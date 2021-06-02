@@ -1,11 +1,12 @@
 /**
  * axios 请求状态返回
  */
+
 import { message } from "ant-design-vue"
 import { useRouter } from "vue-router";
 
 const error = message.error;
-export const requestStatusCode = (status: number): void => {
+export const responseStatusCode = (status: number): void => {
     switch (status) {
         case 400:
             error(('code.error400'));
@@ -20,7 +21,6 @@ export const requestStatusCode = (status: number): void => {
         case 403:
             error(('code.error403'));
             break;
-        // 404请求不存在
         case 404:
             error(('code.error404'));
             break;

@@ -1,12 +1,9 @@
-import instance from "@/utils/http";
-
-
+import request from "@/utils/http";
 
 export const apiUploadFile = (data:FormData) => {
-    return instance({
+    return request({
         url: "/upload/file",
         method: "POST",
         data
-       
     })
 }
