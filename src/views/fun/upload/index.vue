@@ -1,26 +1,56 @@
+<!--
+ * @Description: 
+ * @Author: 前端伪大叔
+ * @Date: 2021-05-27 16:59:57
+ * @LastEditTime: 2021-06-03 17:56:02
+ * @yuque: http://www.yuque.com/qdwds
+-->
 <template>
     <div class="upload">
-        <Card class="upload_card" v-for="(component, index) in components">
-            <component :is="component"></component>
+        <Card
+            :title="c.title"
+            v-for="(c, index) in components"
+            :key="c.component"
+        >
+            <component :is="c.component"></component>
         </Card>
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import UploadFile from "./uploadFile.vue";
-import { Card  } from "ant-design-vue";
+import { Card } from "ant-design-vue";
+import UploadFile from "./components/uploadFile.vue";
+import UploadFiles from "./components/uploadFiles.vue";
+import UploadFolder from "./components/uploadFolder.vue";
+import UploadMaxFIle from "./components/uploadMaxFIle.vue";
 export default defineComponent({
     components: {
+        Card,
         UploadFile,
-        Card 
+        UploadFiles,
+        UploadFolder,
+        UploadMaxFIle,
     },
     setup() {
-      console.log(import.meta.env.VITE_APP_API_URL);
-      
-      return {
+        return {
             components: [
-                "UploadFile",
+                {
+                    title: "单文件上传",
+                    component: "UploadFile",
+                },
+                {
+                    title: "多文件上传",
+                    component: "UploadFiles",
+                },
+                {
+                    title: "文件夹上传",
+                    component: "UploadFolder",
+                },
+                {
+                    title: "大文件上传",
+                    component: "UploadMaxFIle",
+                },
             ],
         };
     },
@@ -28,12 +58,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
 .upload_card {
     width: calc(100% - 24px);
     height: 50px;
     display: inline-block;
-    background: #ccc;
+    background: white;
     margin: 6px 12px 6px 12px;
     padding: 0 12px;
     border-radius: 3px;

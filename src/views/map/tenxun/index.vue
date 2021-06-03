@@ -4,8 +4,10 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from "vue";
+import { useCreaeScript } from "@/hooks/web/useScript";
 export default defineComponent({
     setup() {
+
         onMounted(() => {
             var myLatlng = new qq.maps.LatLng(39.90923, 116.397428);
             var myOptions = {

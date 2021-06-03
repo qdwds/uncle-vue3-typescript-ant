@@ -1,5 +1,9 @@
-/**
- * axios 请求状态返回
+/*
+ * @Description: 
+ * @Author: 前端伪大叔
+ * @Date: 2021-06-03 10:09:27
+ * @LastEditTime: 2021-06-03 10:28:09
+ * @yuque: http://www.yuque.com/qdwds
  */
 
 import { message } from "ant-design-vue"

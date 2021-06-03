@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Author: 前端伪大叔
+ * @Date: 2021-05-31 10:29:25
+ * @LastEditTime: 2021-06-03 11:41:44
+ * @yuque: http://www.yuque.com/qdwds
+-->
 <template>
     <LayoutSider v-model:collapsed="collapsed" collapsible>
         <Logo></Logo>
@@ -44,7 +51,7 @@ export default defineComponent({
         routes.sort(routesSort("meta", "orderNo"));
 
 
-        let collapsed = ref<Boolean>(false);
+        let collapsed = ref<Boolean>(true);
         const getOpenKeys = () => [route.matched[0]?.name];
 
         const state = reactive({

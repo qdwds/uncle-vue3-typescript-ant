@@ -2,7 +2,7 @@
  * @Description: axios 封装
  * @Author: 前端伪大叔
  * @Date: 2021-06-02 21:01:54
- * @LastEditTime: 2021-06-02 23:08:59
+ * @LastEditTime: 2021-06-03 16:51:04
  * @yuque: http://www.yuque.com/qdwds
  */
 
@@ -13,19 +13,15 @@ import { responseStatusCode } from "./status";
 import { uploadProgress } from "./progress";
 import { isFormData } from "../validateType";
 const request = axios.create({
-    timeout: 10000,
+    // timeout: 10000,
     baseURL: baseURL 
 })
 
 request.interceptors.request.use(
     (config: AxiosRequestConfig): AxiosRequestConfig => {
-       
         if(isFormData(config.data)){
-            console.log('form');
-            
             uploadProgress(config)
         }
-        
         return config
     },
     (error: any): any => {
