@@ -2,7 +2,7 @@
  * @Description: 大文件上传
  * @Author: 前端伪大叔
  * @Date: 2021-06-03 17:53:56
- * @LastEditTime: 2021-06-03 18:01:00
+ * @LastEditTime: 2021-06-03 22:07:00
  * @yuque: http://www.yuque.com/qdwds
 -->
 <template>
@@ -15,9 +15,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from "vue";
+import { defineComponent, ref, toRefs } from "vue";
 import { UploadOutlined } from "@ant-design/icons-vue";
-import { apiUploadMaxFile } from "@/api/uploadFile";
+import { apiUploadMaxFile, apiMergeMaxFile } from "@/api/uploadFile";
 import { OUploadFile } from "../types";
 import { Event } from "node_modules/@types/three";
 import Upload from "@/components/Upload/index.vue";
@@ -27,29 +27,66 @@ export default defineComponent({
         Upload,
     },
     setup() {
-        const state = reactive<OUploadFile>({
-            file: null,
-        });
+        const file = ref<File | null>(null);
+
         const beforeUpload = (event: Event): void => {
-            state.file = event.target.files[0];
+            file.value = event.target.files[0];
         };
+        const handleUploadFile = (f: FileList) => (file.value = f[0]);
+
         //  上传
-        const handleUpload = () => {
-            const formData = new FormData();
-            if (state.file) {
-                formData.append("file", state.file);
+        const handleUpload = async () => {
+            const fileCHunkList = handleFileChunk(file.value);
+            const filename:string | undefined = file.value?.name;
+            if (fileCHunkList.length > 0) {
+                //  转成formdata
+                const fileChunks = fileCHunkList
+                    .map(({ file }, index: number) => {
+                        const formData = new FormData();
+                        formData.append("file", file);
+                        formData.append("filename", `${filename} - ${index}`);
+                        return { formData };
+                    })
+                    .map(({ formData }) => {
+                        return requestFile(formData);
+                    });
+                await Promise.all([fileChunks]);
+                console.log("合并切片");
+                await mergeMaxFile(filename);
             }
-            // apiUploadMaxFile(formData)
-            //     .then((res) => {
-            //         console.log(res);
-            //     })
-            //     .catch((e) => {
-            //         console.log(e);
-            //     });
         };
-        const handleUploadFile = (file: FileList) => (state.file = file[0]);
+
+        //  file 转成blob
+        const handleFileChunk = (file: File | null) => {
+            let cur: number = 0;
+            const SIZE = 1024 * 1024 * 5;
+            const fileChunkList: Array<{ file: Blob }> = [];
+            if (file) {
+                while (cur < file?.size) {
+                    fileChunkList.push({
+                        file: file.slice(cur, cur + SIZE),
+                    });
+                    cur += SIZE;
+                }
+                return fileChunkList;
+            } else {
+                return [];
+            }
+        };
+        //  发送切片
+        const requestFile = (formData: FormData) => {
+            apiUploadMaxFile(formData)
+                .then((res) => console.log(res))
+                .catch((err) => console.log(err));
+        };
+        //  合并切片
+        const mergeMaxFile = (filename: string) => {
+            apiMergeMaxFile({filename})
+                .then((res) => console.log(res))
+                .catch((err) => console.log(err));
+        };
         return {
-            ...toRefs(state),
+            file,
             beforeUpload,
             handleUpload,
             handleUploadFile,
