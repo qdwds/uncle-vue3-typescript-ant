@@ -2,7 +2,7 @@
  * @Description: 大文件上传
  * @Author: 前端伪大叔
  * @Date: 2021-06-03 17:53:56
- * @LastEditTime: 2021-06-03 22:07:00
+ * @LastEditTime: 2021-06-04 15:43:20
  * @yuque: http://www.yuque.com/qdwds
 -->
 <template>
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, toRefs } from "vue";
+import { defineComponent, ref, resolveComponent, toRefs } from "vue";
 import { UploadOutlined } from "@ant-design/icons-vue";
 import { apiUploadMaxFile, apiMergeMaxFile } from "@/api/uploadFile";
 import { OUploadFile } from "../types";
@@ -37,7 +37,7 @@ export default defineComponent({
         //  上传
         const handleUpload = async () => {
             const fileCHunkList = handleFileChunk(file.value);
-            const filename:string | undefined = file.value?.name;
+            const filename: string | undefined = file.value?.name;
             if (fileCHunkList.length > 0) {
                 //  转成formdata
                 const fileChunks = fileCHunkList
@@ -47,12 +47,16 @@ export default defineComponent({
                         formData.append("filename", `${filename} - ${index}`);
                         return { formData };
                     })
-                    .map(({ formData }) => {
+                    .map(async ({ formData }) => {
                         return requestFile(formData);
                     });
                 await Promise.all([fileChunks]);
-                console.log("合并切片");
-                await mergeMaxFile(filename);
+                setTimeout(async () => {
+                    if (filename) {
+                        const result =  await mergeMaxFile(filename);
+                        console.log(result);
+                    }
+                },1000);
             }
         };
 
@@ -74,16 +78,20 @@ export default defineComponent({
             }
         };
         //  发送切片
-        const requestFile = (formData: FormData) => {
-            apiUploadMaxFile(formData)
-                .then((res) => console.log(res))
-                .catch((err) => console.log(err));
+        const requestFile = async (formData: FormData) => {
+            return new Promise((resolve, reject) => {
+                apiUploadMaxFile(formData)
+                    .then((res) => resolve(res))
+                    .catch((err) => reject(err));
+            });
         };
         //  合并切片
         const mergeMaxFile = (filename: string) => {
-            apiMergeMaxFile({filename})
-                .then((res) => console.log(res))
-                .catch((err) => console.log(err));
+            return new Promise((resolve, reject) => {
+                apiMergeMaxFile({ filename })
+                    .then((res) => resolve(res))
+                    .catch((err) => reject(err));
+            });
         };
         return {
             file,
